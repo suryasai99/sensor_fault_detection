@@ -2,6 +2,7 @@ import os
 from datetime import datetime
 from sensor.constant.training_pipeline import *
 
+# class for creating folder with timestamp
 class TrainingPipelineConfig:
     def __init__(self, timestamp = datetime.now()):
         timestamp = timestamp.strftime("%m_%d_%Y_%H_%M_%S")
@@ -39,3 +40,42 @@ class DataIngestionConfig:
         self.train_test_split_ratio:float = DATA_INGESTION_TRAIN_TEST_SPLIT_RATIO
 
         self.collection_name: str = DATA_INGESTION_COLLECTION_NAME
+
+
+class DataValidationConfig:
+    def __init__(self, training_pipeline_config:TrainingPipelineConfig):
+
+        # creating data validation folder
+        self.data_validation_dir:str = os.path.join(training_pipeline_config.artifact_dir, 
+                                                    DATA_VALIDATION_DIR_NAME)
+
+        # folder for valid data
+        self.valid_data_dir:str = os.path.join(self.data_validation_dir, 
+                                               DATA_VALIDATION_VALID_DIR)
+        
+        # folder for invalid data
+        self.invalid_data_dir:str = os.path.join(self.data_validation_dir,
+                                                 DATA_VALIDATION_INVALID_DIR)
+        
+        # file path for valid train
+        self.valid_train_file_path:str = os.path.join(self.valid_data_dir,
+                                                      TRAIN_FILE_NAME)
+        
+        # file path for valid test
+        self.valid_test_file_path:str = os.path.join(self.valid_data_dir,
+                                                TEST_FILE_NAME)
+        
+        # file path for invalid train
+        self.invalid_train_file_path:str = os.path.join(self.invalid_data_dir,
+                                                   TRAIN_FILE_NAME)
+
+        # file path for valid test
+        self.invalid_test_file_path:str = os.path.join(self.invalid_data_dir,
+                                                  TEST_FILE_NAME)
+        
+        # file path for drift report
+        self.drift_report_file_path:str = os.path.join(
+            self.data_validation_dir,
+            DATA_VALIDATION_DRIFT_REPORT_DIR,
+            DATA_VALIDATION_DRIFT_REPORT_FILE_NAME
+        )
