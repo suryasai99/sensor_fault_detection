@@ -108,14 +108,20 @@ class DataTransformation:
 
             # concatenating independent and dependent features of train
             logging.info("concatenating independent and dependent features of train")
-            train_arr = np.c_(input_feature_train_final,
-                              target_feature_train_final)
+            train_arr = np.c_[
+                input_feature_train_final,
+                target_feature_train_final
+            ]
+         
 
             # concatenating independent and dependent features of test
             logging.info("concatenating independent and dependent features of test")
-            test_arr = np.c_(input_feature_test_final, 
-                             target_feature_test_final)
-            
+            test_arr = np.c_[
+                input_feature_test_final, 
+                 target_feature_test_final
+
+            ]
+ 
             # save numpy array data
             logging.info("saving the training array")
             save_numpy_array_data(self.data_transformation_config.transformed_train_file_path,
