@@ -44,7 +44,6 @@ class DataValidation:
                 if cols not in dataframe.columns:
                     numerical_columns_present = False
                     missing_numerical_columns.append(cols)
-                logging.info(f"missing numerical columns: [{missing_numerical_columns}]")
             
             return numerical_columns_present
         
@@ -94,7 +93,6 @@ class DataValidation:
 
     def initiate_data_validation(self)->DataValidationArtifact:
         try:
-            logging.info("initiating  data validation")
             error_message = ""
             # taking the train and test file paths     
             train_file_path = self.data_ingestion_artifact.trained_file_path 
@@ -113,7 +111,7 @@ class DataValidation:
             status = self.validate_number_of_columns(dataframe = train_dataframe)
             if not status:
                 error_message = f"{error_message} train dataframe does not contain all the columns"
-            logging.info(f'status of validating number of columns for training data is:{status}')
+            logging.info(f'validating number of columns for training data is completed')
 
             # validating for test data
             logging.info('validating number of columns for test data')
@@ -127,22 +125,22 @@ class DataValidation:
             status = self.is_numerical_column_exist(dataframe = train_dataframe)
             if not status:
                 error_message = f"{error_message} Train dataframe does not contain all numerical columns"
-            logging.info(f'validated numerical columns for training data and status is:{status}')
+            logging.info(f'validated numerical columns for training data and status is completed')
 
             logging.info('validating numerical columns for test set')
             status = self.is_numerical_column_exist(dataframe = test_dataframe)
             if not status:
                 error_message = f"{error_message} Test dataframe does not contain all numerical columns"
-            logging.info(f'validated numerical columns for test data and status is:{status}')
+            logging.info(f'validated numerical columns for test data and status is completed')
 
-            if len(error_message>0):
+            if len(error_message)>0:
                 raise Exception(error_message)
             
             # check data drift
             logging.info('checking the data drift for train and test data')
             status = self.detect_dataset_drift(base_df = train_dataframe,
                                                current_df = test_dataframe)
-            logging.info(f'status of the data drift for train and test data is {status}')
+            logging.info(f'status of the data drift for train and test data is completed')
 
             data_validation_artifact = DataValidationArtifact(
                 validation_status = status,
@@ -153,9 +151,8 @@ class DataValidation:
                 drift_report_file_path = self.data_validation_config.drift_report_file_path
             )
 
-
-            logging.info("initiate_data_validation successfull")
-            pass
+            logging.info(f"Data validation artifact: {data_validation_artifact}")
+            return data_validation_artifact
 
         except Exception as e:
             logging.info("error occured in initiate_data_validation")
