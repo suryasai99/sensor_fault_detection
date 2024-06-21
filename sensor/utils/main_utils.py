@@ -79,3 +79,15 @@ def save_object(file_path:str, obj:object)->None:
 
     except Exception as e:
         raise CustomException(e,sys)
+    
+def load_object(file_path:str, obj:object)->None:
+    try:
+        if not os.path.exists(file_path):
+            raise Exception(f"The file: {file_path} does not exists")
+
+        with open(file_path,'rb') as file_obj:
+            dill.load(obj,file_obj)
+            return dill
+        
+    except Exception as e:
+        raise CustomException(e,sys)

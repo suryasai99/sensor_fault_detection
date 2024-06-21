@@ -83,25 +83,75 @@ class DataValidationConfig:
 
 class DataTransformationConfig:
     def __init__(self,training_pipeline_config: TrainingPipelineConfig):
+
+        # creating folder for data transformation
         self.data_transformation_dir:str = os.path.join(
             training_pipeline_config.artifact_dir, DATA_TRANSFORMATION_DIR_NAME
         )
 
+        # file path for train data
         self.transformed_train_file_path:str = os.path.join(
             self.data_transformation_dir,
             DATA_TRANSFORMATION_TRANSFORMED_DATA_DIR,
             TRAIN_FILE_NAME.replace("csv","npy")
         )
-
+ 
+        # file path for test data
         self.transformed_test_file_path:str = os.path.join(
             self.data_transformation_dir,
             DATA_TRANSFORMATION_TRANSFORMED_DATA_DIR,
             TEST_FILE_NAME.replace("csv","npy")
         )
 
+        # file path for preprocessing model
         self.transformed_object_file_path = os.path.join(
             self.data_transformation_dir,
             DATA_TRANSFORMATION_TRANSFORMED_OBJECT_DIR,
             PREPROCESSING_FILE_NAME
         )
+
+class ModelTrainerConfig:
+    def __init(self,
+               training_pipeline_config:TrainingPipelineConfig):
+        
+        # creating folder for model training
+        self.model_trainer_dir:str = os.path.join(
+            training_pipeline_config.artifact_dir,
+            MODEL_TRAINER_DIR_NAME
+        )
+
+        # file path to save the trained model
+        self.trained_model_file_path:str = os.path.join(
+            self.model_trainer_dir,
+            MODEL_TRAINER_TRAINED_MODEL_DIR,
+            MODEL_TRAINER_TRAINED_MODEL_NAME
+        )
+        
+        # expected accuracy
+        self.expected_accuracy:float = MODEL_TRAINER_EXPECTED_SCORE
+
+        self.overfitting_underfitting_threshold = MODEL_TRAINER_OVERFITTING_UNDERFITTING_THRESHOLD
+
+class ModelEvaluationConfig:
+
+    def __init__(self, 
+                 training_pipeline_config:TrainingPipelineConfig):
+        
+        # directory name
+        self.model_evaluation_dir:str = os.path.join(
+            training_pipeline_config.artifact_dir,
+            MODEL_EVALUATION_DIR_NAME
+        )
+
+        # report file path
+        self.report_file_path = os.path.join(
+            self.model_evaluation_dir,
+            MODEL_EVALUATION_REPORT_NAME
+        )
+
+        # threshold score to compare with the previous model
+        self.change_threshold = MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE
+        
+
+    
 
