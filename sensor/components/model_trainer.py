@@ -97,6 +97,7 @@ class ModelTrainer:
 
 
             # saving the entire model(preprocessor+model)
+            logging.info("saving the entire model(preprocessor+model)")
             save_object(
                 self.model_trainer_config.trained_model_file_path,
                 obj = sensor_model

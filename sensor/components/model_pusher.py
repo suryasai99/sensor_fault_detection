@@ -24,6 +24,7 @@ class ModelPusher:
         
     def initiate_model_pusher(self)->ModelPusherArtifact:
         try:
+            logging.info("initiated model pusher")
             trained_model_path = self.model_eval_artifact.trained_model_path
 
             # creating model pusher directory to save model
@@ -34,7 +35,7 @@ class ModelPusher:
             
             # saved model dir
             saved_model_path = self.model_pusher_config.saved_model_path
-            os.makedirs(os.path.dirname(model_file_path), exist_ok = True)
+            os.makedirs(os.path.dirname(saved_model_path), exist_ok = True)
             shutil.copy(src = trained_model_path,
                         dst = saved_model_path)
             
@@ -43,8 +44,10 @@ class ModelPusher:
                 saved_model_path = saved_model_path, 
                 model_file_path = model_file_path
             )
+            logging.info("model pusher successfull")
             return model_pusher_artifact
             
 
         except Exception as e:
+            logging.info("error occured in initiated model pusher")
             raise CustomException(e,sys)

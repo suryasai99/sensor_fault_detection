@@ -111,7 +111,7 @@ class DataTransformationConfig:
         )
 
 class ModelTrainerConfig:
-    def __init(self,
+    def __init__(self,
                training_pipeline_config:TrainingPipelineConfig):
         
         # creating folder for model training

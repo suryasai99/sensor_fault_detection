@@ -1,6 +1,6 @@
 from sensor.constant.training_pipeline import SAVED_MODEL_DIR,MODEL_FILE_NAME
 from sensor.exception import CustomException
-import os
+import os,sys
 
 class SensorModel:
 
@@ -52,7 +52,7 @@ class ModelResolver:
                 return False
             
             # checking the existence of the model
-            latest_model_path = self.get_best_model()
+            latest_model_path = self.get_best_model_path()
             if not os.path.exists(latest_model_path):
                 return False
             

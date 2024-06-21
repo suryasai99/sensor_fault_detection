@@ -25,8 +25,8 @@ class ModelEvaluation:
                  data_validation_artifact: DataValidationArtifact,
                  model_trainer_artifact:ModelTrainerArtifact):
         try:
-            self.model_eval_config = model_eval_config,
-            self.data_validation_artifact = data_validation_artifact,
+            self.model_eval_config = model_eval_config
+            self.data_validation_artifact = data_validation_artifact
             self.model_trainer_artifact = model_trainer_artifact
 
         except Exception as e:
@@ -34,14 +34,17 @@ class ModelEvaluation:
         
     def initiate_model_evaluation(self)->ModelEvaluationArtifact:
         try:
+            logging.info("initiating model evaluation")
             valid_train_file_path = self.data_validation_artifact.valid_train_file_path
             valid_test_file_path = self.data_validation_artifact.valid_test_file_path
 
             # valid train and test dataframe
+            logging.info("taking the train and test from validated file path")
             train_df = pd.read_csv(valid_train_file_path)
             test_df = pd.read_csv(valid_test_file_path)
 
             # concatenating train and test
+            logging.info("concatenating train and test")
             df = pd.concat([train_df,test_df])
 
             # sepearting input and target column
@@ -50,6 +53,7 @@ class ModelEvaluation:
 
             # applying label encoder to change categorical to numerical
             label_encoder = LabelEncoder()
+            logging.info("label encoding on output")
             y_true = label_encoder.fit_transform(y_true)
 
 
@@ -106,5 +110,6 @@ class ModelEvaluation:
             return model_evaluation_artifact
 
         except Exception as e:
+            logging.info("error occured in initiate_model_evaluation")
             raise CustomException(e,sys)
   
