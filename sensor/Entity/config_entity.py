@@ -151,7 +151,30 @@ class ModelEvaluationConfig:
 
         # threshold score to compare with the previous model
         self.change_threshold = MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE
+
+
+class ModelPusherConfig:
+
+    def __init__(self, 
+                 training_pipeline_config:TrainingPipelineConfig):
+        
+        # directory name
+        self.model_evaluation_dir:str = os.path.join(
+            training_pipeline_config.artifact_dir,
+            MODEL_PUSHER_DIR_NAME
+        )
+
+        # file path for the saved model
+        self.model_file_path = os.path.join(self.model_evaluation_dir,
+                                            MODEL_FILE_NAME)
         
 
+        timestamp = round(datetime.now().timestamp())
+        self.saved_model_path = os.path.join(
+            SAVED_MODEL_DIR,
+            f"{timestamp}",
+            MODEL_FILE_NAME
+        )
+        
     
 

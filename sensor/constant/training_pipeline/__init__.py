@@ -13,6 +13,7 @@ TEST_FILE_NAME:str = "test.csv"
 
 
 PREPROCESSING_FILE_NAME = "preprocessing.pkl"
+MODEL_FILE_NAME = "model.pkl"
 SCHEMA_FILE_PATH = os.path.join("config/schema.yaml")
 SCHEMA_DROP_COLS = "drop_columns"
 
@@ -69,3 +70,10 @@ MOdel evaluation related constant start with MODE EVALUATION
 MODEL_EVALUATION_DIR_NAME:str = "model_evaluation"
 MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE:float = 0.02
 MODEL_EVALUATION_REPORT_NAME:str = "report.yaml"
+
+"""
+MOdel pusher related constant 
+
+"""
+MODEL_PUSHER_DIR_NAME:str = "model_pusher"
+MODEL_PUSHER_SAVED_MODEL_DIR:str = SAVED_MODEL_DIR

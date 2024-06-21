@@ -52,9 +52,11 @@ class ModelTrainer:
             )
 
             # fitting model to x_train and y_train
+            logging.info("training the model on x_train and y_train")
             model = self.train_model(x_train,y_train)
 
             # predicting for x_train as well
+            logging.info("predicting values of x_train on the trained model")
             y_train_pred = model.predict(x_train)
 
             # metrics for predicting x_train
@@ -67,6 +69,7 @@ class ModelTrainer:
                 raise Exception("model is not good further experiment required")
 
             # predicting values for x_test
+            logging.info("predicting values of x_test on the trained model")
             y_test_pred = model.predict(x_test)
 
             # metrics for predicting x_test
@@ -76,6 +79,7 @@ class ModelTrainer:
             )
 
             # Test to find whether our model is overfitting or underfitting
+            logging.info("To check whether our model is overfitting or underfitting")
             diff = abs(classification_train_metric.f1_score - classification_test_metric.f1_score)
 
             if diff > self.model_trainer_config.overfitting_underfitting_threshold:
@@ -109,4 +113,5 @@ class ModelTrainer:
             return model_trainer_artifact
 
         except Exception as e:
+            logging.info("error occured in initiate_model_trainer")
             raise CustomException(e,sys)
