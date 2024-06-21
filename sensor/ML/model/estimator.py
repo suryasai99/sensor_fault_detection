@@ -1,4 +1,5 @@
 from sensor.constant.training_pipeline import SAVED_MODEL_DIR,MODEL_FILE_NAME
+from sensor.exception import CustomException
 import os
 
 class SensorModel:
@@ -17,3 +18,44 @@ class SensorModel:
             return y_hat
         except Exception as e:
             raise e
+
+class ModelResolver:
+
+    """
+    This is used to get the model with latest timestamp (i.e it gives base model)
+    """
+
+    def __init__(self,model_dir = SAVED_MODEL_DIR):
+        try:
+            self.model_dir = model_dir
+        except Exception as e:
+            raise CustomException(e,sys)
+    
+    def get_best_model_path(self)->str:
+        try:
+            timestamps = list(map(int, os.listdir(self.model_dir)))
+            latest_timestamp = max(timestamps)
+            latest_model_path = os.path.join(self.model_dir,f"{latest_timestamp}", MODEL_FILE_NAME)
+            return latest_model_path
+        except Exception as e:
+            raise CustomException(e,sys)
+        
+    def is_model_exists(self)->bool:
+        try:
+            # checking the avalabilty of directory
+            if not os.path.exists(self.model_dir):
+                return False
+            
+            # checking the avalabilty of timestamp folder inside the directory
+            timestamps = os.listdit(self.model_dir)
+            if len(timestamps)==0:
+                return False
+            
+            # checking the existence of the model
+            latest_model_path = self.get_best_model()
+            if not os.path.exists(latest_model_path):
+                return False
+            
+            return True
+        except Exception as e:
+            raise CustomException(e,sys)
